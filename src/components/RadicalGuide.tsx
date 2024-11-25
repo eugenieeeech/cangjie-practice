@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const radicals = [
+export const radicals = [
   { category: "哲理類", radical: "日", key: "A", description: "日" },
   { category: "哲理類", radical: "月", key: "B", description: "月" },
   { category: "哲理類", radical: "金", key: "C", description: "金" },
