@@ -12,7 +12,7 @@ const TypingInput: React.FC = () => {
       type="text"
       value={inputValue}
       onChange={handleChange}
-      className="border p-2"
+      className="w-full max-w-md text-center"
       placeholder="Type here..."
     />
   );
