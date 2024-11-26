@@ -13,7 +13,7 @@ const App: React.FC = () => {
   return (
     <div
       className={`min-h-screen align-centre transition-all  ${
-        darkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"
+        darkMode ? "bg-gray-900 text-white" : "bg-slate-100 text-gray-900"
       }`}
     >
       <div className="justify-between top-8 transform  p-4 flex items-center">
