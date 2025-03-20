@@ -42,7 +42,7 @@ const GameContainer: React.FC = () => {
       setCorrectAttempts(correctAttempts + 1);
       setTotalAttempts(totalAttempts + 1);
       updateCharacter();
-    } else if (input.length >= current.code.length) {
+    } else {
       setCombo(0);
       setErrorMessage('Wrong input, try again!');
       setShake(true);
