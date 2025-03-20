@@ -21,6 +21,8 @@ const GameContainer: React.FC = () => {
   const [totalAttempts, setTotalAttempts] = useState(0);
   const [correctAttempts, setCorrectAttempts] = useState(0);
   const [shuffledDictionary, setShuffledDictionary] = useState(shuffleArray(dictionary));
+  const [errorMessage, setErrorMessage] = useState('');
+  const [shake, setShake] = useState(false);
 
   useEffect(() => {
     setShuffledDictionary(shuffleArray(dictionary));
@@ -28,6 +30,7 @@ const GameContainer: React.FC = () => {
 
   const updateCharacter = () => {
     setCurrentCharIndex((prevIndex) => (prevIndex + 1) % shuffledDictionary.length);
+    setErrorMessage('');
   };
 
   const handleInput = (input: string) => {
@@ -41,13 +44,19 @@ const GameContainer: React.FC = () => {
       updateCharacter();
     } else if (input.length >= current.code.length) {
       setCombo(0);
+      setErrorMessage('Wrong input, try again!');
+      setShake(true);
+      setTimeout(() => setShake(false), 500); // Reset shake animation after 500ms
     }
   };
 
   return (
     <div className="flex flex-col items-center gap-8">
       <CharacterDisplay character={shuffledDictionary[currentCharIndex]} />
-      <InputArea onInput={handleInput} />
+      <div className={shake ? 'animate-shake' : ''}>
+        <InputArea onInput={handleInput} />
+      </div>
+      {errorMessage && <div className="text-red-500 font-bold animate-pulse">{errorMessage}</div>}
       <Stats score={score} combo={combo} accuracy={totalAttempts === 0 ? 0 : Math.round((correctAttempts / totalAttempts) * 100)} />
     </div>
   );
