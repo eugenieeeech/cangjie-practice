@@ -18,6 +18,7 @@ const InputArea: React.FC<InputAreaProps> = ({ onInput }) => {
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === ' ' || e.key === 'Enter') {
       onInput(input);
+      // TODO: don not clear when the answer is wrong
       setInput('');
     }
   };
