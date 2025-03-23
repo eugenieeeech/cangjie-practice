@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import CharacterDisplay from './CharacterDisplay';
-import InputArea from './InputArea';
-import Stats from './Stats';
-import { dictionary } from '../constant/dictionary';
+import React, { useState, useEffect } from "react";
+import CharacterDisplay from "./CharacterDisplay";
+import InputArea from "./InputArea";
+import Stats from "./Stats";
+import { Dictionary, dictionary } from "../constant/dictionary";
 
 // Function to shuffle an array
-const shuffleArray = (array: any[]) => {
+const shuffleArray = (array: Dictionary[]) => {
   const shuffledArray = array.slice();
   for (let i = shuffledArray.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -20,8 +20,10 @@ const GameContainer: React.FC = () => {
   const [combo, setCombo] = useState(0);
   const [totalAttempts, setTotalAttempts] = useState(0);
   const [correctAttempts, setCorrectAttempts] = useState(0);
-  const [shuffledDictionary, setShuffledDictionary] = useState(shuffleArray(dictionary));
-  const [errorMessage, setErrorMessage] = useState('');
+  const [shuffledDictionary, setShuffledDictionary] = useState(
+    shuffleArray(dictionary)
+  );
+  const [errorMessage, setErrorMessage] = useState("");
   const [shake, setShake] = useState(false);
 
   useEffect(() => {
@@ -29,8 +31,10 @@ const GameContainer: React.FC = () => {
   }, []);
 
   const updateCharacter = () => {
-    setCurrentCharIndex((prevIndex) => (prevIndex + 1) % shuffledDictionary.length);
-    setErrorMessage('');
+    setCurrentCharIndex(
+      (prevIndex) => (prevIndex + 1) % shuffledDictionary.length
+    );
+    setErrorMessage("");
   };
 
   const handleInput = (input: string) => {
@@ -44,7 +48,9 @@ const GameContainer: React.FC = () => {
       updateCharacter();
     } else {
       setCombo(0);
-      setErrorMessage('Wrong input, try again!');
+      setErrorMessage("Wrong input, try again!");
+      console.log("Code:", current.code);
+      console.log("Input:", input);
       setShake(true);
       setTimeout(() => setShake(false), 500); // Reset shake animation after 500ms
     }
@@ -53,11 +59,23 @@ const GameContainer: React.FC = () => {
   return (
     <div className="flex flex-col items-center gap-8">
       <CharacterDisplay character={shuffledDictionary[currentCharIndex]} />
-      <div className={shake ? 'animate-shake' : ''}>
+      <div className={shake ? "animate-shake" : ""}>
         <InputArea onInput={handleInput} />
       </div>
-      {errorMessage && <div className="text-red-500 font-bold animate-pulse">{errorMessage}</div>}
-      <Stats score={score} combo={combo} accuracy={totalAttempts === 0 ? 0 : Math.round((correctAttempts / totalAttempts) * 100)} />
+      {errorMessage && (
+        <div className="text-red-500 font-bold animate-pulse">
+          {errorMessage}
+        </div>
+      )}
+      <Stats
+        score={score}
+        combo={combo}
+        accuracy={
+          totalAttempts === 0
+            ? 0
+            : Math.round((correctAttempts / totalAttempts) * 100)
+        }
+      />
     </div>
   );
 };
