@@ -48,9 +48,7 @@ const GameContainer: React.FC = () => {
       updateCharacter();
     } else {
       setCombo(0);
-      setErrorMessage("Wrong input, try again!");
-      console.log("Code:", current.code);
-      console.log("Input:", input);
+      setErrorMessage("輸入錯誤，請再試一次！");
       setShake(true);
       setTimeout(() => setShake(false), 500); // Reset shake animation after 500ms
     }
