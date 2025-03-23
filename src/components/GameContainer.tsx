@@ -55,7 +55,7 @@ const GameContainer: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-8">
+    <div className="flex flex-col items-center gap-8 pb-2">
       <CharacterDisplay character={shuffledDictionary[currentCharIndex]} />
       <div className={shake ? "animate-shake" : ""}>
         <InputArea onInput={handleInput} />
