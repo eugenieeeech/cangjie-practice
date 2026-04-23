@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import CharacterDisplay from "./CharacterDisplay";
 import InputArea from "./InputArea";
 import Stats from "./Stats";
@@ -25,10 +25,18 @@ const GameContainer: React.FC = () => {
   );
   const [errorMessage, setErrorMessage] = useState("");
   const [shake, setShake] = useState(false);
+  const characterCardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setShuffledDictionary(shuffleArray(dictionary));
   }, []);
+
+  const scrollCardIntoView = () => {
+    characterCardRef.current?.scrollIntoView({
+      block: "nearest",
+      behavior: "smooth",
+    });
+  };
 
   const updateCharacter = () => {
     setCurrentCharIndex(
@@ -55,25 +63,29 @@ const GameContainer: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-8 pb-2">
-      <CharacterDisplay character={shuffledDictionary[currentCharIndex]} />
-      <div className={shake ? "animate-shake" : ""}>
-        <InputArea onInput={handleInput} />
+    <div className="flex-1 min-h-0 flex flex-col items-center gap-4 md:gap-8 overflow-y-auto pb-[var(--vv-bottom-inset,0px)] px-2">
+      <div ref={characterCardRef} className="shrink-0">
+        <CharacterDisplay character={shuffledDictionary[currentCharIndex]} />
+      </div>
+      <div className={`shrink-0 ${shake ? "animate-shake" : ""}`}>
+        <InputArea onInput={handleInput} onInputFocus={scrollCardIntoView} />
       </div>
       {errorMessage && (
-        <div className="text-red-500 font-bold animate-pulse">
+        <div className="text-red-500 font-bold animate-pulse shrink-0">
           {errorMessage}
         </div>
       )}
-      <Stats
-        score={score}
-        combo={combo}
-        accuracy={
-          totalAttempts === 0
-            ? 0
-            : Math.round((correctAttempts / totalAttempts) * 100)
-        }
-      />
+      <div className="w-full flex justify-center md:mt-auto shrink-0 pb-2">
+        <Stats
+          score={score}
+          combo={combo}
+          accuracy={
+            totalAttempts === 0
+              ? 0
+              : Math.round((correctAttempts / totalAttempts) * 100)
+          }
+        />
+      </div>
     </div>
   );
 };
