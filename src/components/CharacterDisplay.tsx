@@ -11,8 +11,8 @@ const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ character }) => {
   const [showHint, setShowHint] = useState(false);
 
   return (
-    <div className="w-72 h-72 bg-gray-100 dark:bg-gray-800 rounded-2xl shadow-lg flex flex-col items-center justify-center p-8 transition-all">
-      <div className="text-8xl mb-4">{character.char}</div>
+    <div className="w-[min(18rem,85vw)] aspect-square max-w-[18rem] bg-gray-100 dark:bg-gray-800 rounded-2xl shadow-lg flex flex-col items-center justify-center p-4 sm:p-8 transition-all">
+      <div className="text-6xl sm:text-8xl mb-2 sm:mb-4">{character.char}</div>
       <button
         className="mt-4 px-4 py-2 bg-slate-500 text-white rounded-lg flex items-center"
         onClick={() => setShowHint(!showHint)}

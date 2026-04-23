@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import GameContainer from "./components/GameContainer";
 import { RadicalGuide } from "./components/RadicalGuide";
+import { useVisualViewportInset } from "./hooks/useVisualViewportInset";
 
 const App: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
+  useVisualViewportInset();
 
   useEffect(() => {
     document.body.classList.toggle("dark", darkMode);
@@ -12,11 +14,11 @@ const App: React.FC = () => {
 
   return (
     <div
-      className={` min-h-screen align-centre transition-all  ${
+      className={`min-h-dvh flex flex-col transition-all ${
         darkMode ? "bg-gray-900 text-white" : "bg-slate-100 text-gray-900"
       }`}
     >
-      <div className="justify-between top-8 transform  p-4 flex items-center">
+      <div className="shrink-0 flex justify-between items-center p-4">
         <RadicalGuide />
         <div
           className="p-2 rounded-full cursor-pointer bg-gray-200 dark:bg-gray-800 shadow-lg"
@@ -25,8 +27,10 @@ const App: React.FC = () => {
           🌓
         </div>
       </div>
-      <Header />
-      <GameContainer />
+      <div className="flex-1 flex flex-col min-h-0">
+        <Header />
+        <GameContainer />
+      </div>
     </div>
   );
 };

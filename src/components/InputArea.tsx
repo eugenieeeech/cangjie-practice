@@ -3,9 +3,10 @@ import { radicals } from "./RadicalGuide";
 
 interface InputAreaProps {
   onInput: (input: string) => void;
+  onInputFocus?: () => void;
 }
 
-const InputArea: React.FC<InputAreaProps> = ({ onInput }) => {
+const InputArea: React.FC<InputAreaProps> = ({ onInput, onInputFocus }) => {
   const [input, setInput] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,6 +45,7 @@ const InputArea: React.FC<InputAreaProps> = ({ onInput }) => {
         value={input}
         onChange={handleChange}
         onKeyDown={handleKeyPress}
+        onFocus={onInputFocus}
         placeholder="請輸入倉頡碼(英文鍵)"
         className="border-none w-full p-4 text-xl rounded-lg bg-gray-100 dark:bg-gray-800 shadow-lg text-center"
       />
